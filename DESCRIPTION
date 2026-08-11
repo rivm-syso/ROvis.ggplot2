@@ -1,0 +1,35 @@
+Package: ROvis.ggplot2
+Title: Rijksoverheid Visualisatie - ggplot2
+Version: 0.0.0.9000
+Authors@R: person("ROvis team", email = "spin@rivm.nl", role = c("cre", "aut"))
+Description: This package provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
+License: Apache License (>= 2)
+Imports: 
+    systemfonts (>= 1.3.2),
+    ggplot2,
+    grid (>= 4.6.1),
+    scales (>= 1.4.0),
+    ROvis.utils,
+    rlang,
+    cli (>= 3.6.6)
+Suggests: 
+    covr (>= 3.6.4),
+    gt (>= 1.3.0),
+    knitr (>= 1.51),
+    pkgdown (>= 2.0.9),
+    quarto (>= 1.4),
+    testthat (>= 3.0.0),
+    tidyverse (>= 2.0.0),
+    vdiffr (>= 1.0.9),
+    webshot (>= 0.5.5)
+Depends:
+    R (>= 4.3.0)
+Remotes:
+    gitlab@gitlab.rivm.nl::SPIN/ROvis.utils@develop
+VignetteBuilder: knitr
+Config/Roxygen2/markdown: TRUE
+Config/Roxygen2/version: 8.0.0
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0

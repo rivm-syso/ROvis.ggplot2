@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# do not track these folders
+tests/testthat/outputs/*
+logs/*
+
+# do not track these files
+*.html
+
+inst/doc
+docs
