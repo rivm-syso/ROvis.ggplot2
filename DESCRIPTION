@@ -7,7 +7,7 @@ License: Apache License (>= 2)
 Imports: 
     systemfonts (>= 1.3.2),
     ggplot2,
-    grid (>= 4.6.1),
+    grid (>= 4.5.1),
     scales (>= 1.4.0),
     ROvis.utils,
     rlang,
