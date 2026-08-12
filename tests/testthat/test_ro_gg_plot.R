@@ -18,8 +18,8 @@ test_that("ro_gg_plot applies RO bar styling and removes legend titles", {
   # the legend key is kept (as NULL), not dropped, so ggplot2 does not fall back to a default
   expect_true("fill" %in% names(result$labels))
   expect_null(result$labels[["fill"]])
-  expect_equal(result$layers[[1]]$geom_params$width, 0.8)
-  expect_equal(result$layers[[1]]$aes_params$linewidth, 0)
+  expect_identical(result$layers[[1]]$geom_params$width, 0.8)
+  expect_identical(result$layers[[1]]$aes_params$linewidth, 0)
   expect_identical(result$coordinates$clip, "off")
 })
 
@@ -40,7 +40,7 @@ test_that("ro_gg_plot adds a formatted continuous scale for charts", {
   y_scale <- result$scales$scales[[y_idx]]
 
   expect_length(y_idx, 1)
-  expect_equal(y_scale$labels(1000), "1.000")
+  expect_identical(y_scale$labels(1000), "1.000")
 })
 
 test_that("ro_gg_plot leaves scatter plots on the default scale", {
@@ -63,7 +63,7 @@ test_that("ro_gg_plot leaves scatter plots on the default scale", {
   # scatter plots get the thousands separator but keep ggplot2's default limits/expansion,
   # since there is no discrete/category axis for the continuous axis to touch at zero
   expect_null(y_scale$limits)
-  expect_equal(y_scale$labels(1000), "1.000")
+  expect_identical(y_scale$labels(1000), "1.000")
   # no group ticks or y-axis title relocation happened, so clip stays at the ggplot2 default
   expect_identical(result$coordinates$clip, "on")
 })
@@ -83,7 +83,7 @@ test_that("ro_gg_plot does not override a scale the user already added", {
   ))
 
   expect_length(y_idx, 1)
-  expect_equal(result$scales$scales[[y_idx]]$limits, c(0, 10000))
+  expect_identical(result$scales$scales[[y_idx]]$limits, c(0, 10000))
 })
 
 test_that("ro_gg_plot relocates the y-axis title unless auto_set_y_title = FALSE", {

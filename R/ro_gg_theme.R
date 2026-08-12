@@ -253,13 +253,13 @@ ro_gg_theme_1.0 <- function(base_size, base_family, flip) {
 
   if (
     base_family == "RijksoverheidSansWebText" &&
-      !"RijksoverheidSansWebText" %in% systemfonts::system_fonts()$family
+      !"RijksoverheidSansWebText" %in% system_fonts()$family
   ) {
     base_family <- "Verdana"
   }
 
   # show info alert once per session
-  rlang::inform(
+  inform(
     "Keep in mind that when using ro_gg_theme, you need to take additional coding steps to fully comply
     with the RIVM style. For more information, see the ROvis documentation website:
     https://rivm-syso.github.io/ROvis",

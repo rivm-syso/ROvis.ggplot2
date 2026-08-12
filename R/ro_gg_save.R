@@ -40,7 +40,7 @@ ro_gg_save <- function(
   ...
 ) {
   if (!inherits(plot, "ggplot")) {
-    rlang::abort("'object' must be a ggplot object.")
+    abort("'object' must be a ggplot object.")
   }
 
   plot <- plot +

@@ -122,5 +122,5 @@ test_that("ro_gg_theme uses the font given in ro_gg_theme", {
     ggplot2::geom_bar(stat = "identity") +
     labs(title = "mtcars plot") +
     ro_gg_theme(version = "1.0", base_family = "Verdana")
-  expect_equal(p@theme$text@family, "Verdana")
+  expect_identical(p@theme$text@family, "Verdana")
 })

@@ -24,7 +24,7 @@ First, we need to load the required packages.
 ```{r setup, message = FALSE}
 library(tidyverse)
 library(ROvis.utils)
-library(ROvis.ggplot2)
+library(ROvis.ggplot2) # nolint: missing_package_linter.
 ```
 
 Second, we generate simulated data that mimics the structure of COVID-19 test data. We will use data for January 2022 for example graphs.
@@ -128,9 +128,9 @@ Now, we want to apply the RIVM colors by using `ROvis.utils::ro_color()` as part
 fig_brab +
   scale_colour_manual(
     values = c(
-      "Brabant-Noord" = ROvis.utils::ro_color("hemelblauw"),
-      "Brabant-Zuidoost" = ROvis.utils::ro_color("donkergeel"),
-      "Midden- en West-Brabant" = ROvis.utils::ro_color("robijnrood")
+      "Brabant-Noord" = ro_color("hemelblauw"),
+      "Brabant-Zuidoost" = ro_color("donkergeel"),
+      "Midden- en West-Brabant" = ro_color("robijnrood")
     )
   )
 ```
