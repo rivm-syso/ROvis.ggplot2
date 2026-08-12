@@ -111,10 +111,10 @@
 #'   }
 #' @export
 ro_gg_theme <- function(
-    base_size = 12,
-    base_family = "RijksoverheidSansWebText",
-    flip = FALSE,
-    version = "1.0"
+  base_size = 12,
+  base_family = "RijksoverheidSansWebText",
+  flip = FALSE,
+  version = "1.0"
 ) {
   check_string(version, allow_empty = FALSE)
   check_string(base_family)
@@ -253,7 +253,7 @@ ro_gg_theme_1.0 <- function(base_size, base_family, flip) {
 
   if (
     base_family == "RijksoverheidSansWebText" &&
-    !"RijksoverheidSansWebText" %in% systemfonts::system_fonts()$family
+      !"RijksoverheidSansWebText" %in% systemfonts::system_fonts()$family
   ) {
     base_family <- "Verdana"
   }

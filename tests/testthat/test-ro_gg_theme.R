@@ -1,5 +1,4 @@
 test_that("ro_gg_theme works for standard graphs", {
-
   # version 1.0
   barplot_ro_gg_theme <- mtcars |>
     dplyr::mutate(gear = as.factor(gear)) |>
@@ -22,11 +21,9 @@ test_that("ro_gg_theme works for standard graphs", {
     labs(title = "mtcars plot") +
     ro_gg_theme(version = "0.0")
   vdiffr::expect_doppelganger("barplot_ro_gg_theme_0.0", barplot_ro_gg_theme_0.0)
-
 })
 
 test_that("ro_gg_theme works with flip = TRUE", {
-
   # only possible for version 1.0
   horizontalbar_ro_gg_theme <- mtcars |>
     dplyr::mutate(gear = as.factor(gear)) |>
@@ -37,11 +34,9 @@ test_that("ro_gg_theme works with flip = TRUE", {
     ro_gg_theme(flip = TRUE, version = "1.0", base_family = "Verdana")
 
   vdiffr::expect_doppelganger("horizontalbar_ro_gg_theme", horizontalbar_ro_gg_theme)
-
 })
 
 test_that("ro_gg_theme works for more elaborate graphs", {
-
   # version 1.0
   groupedline_ro_gg_theme <- mtcars |>
     dplyr::mutate(cyl = as.factor(cyl)) |>
@@ -71,11 +66,9 @@ test_that("ro_gg_theme works for more elaborate graphs", {
     ro_gg_theme(version = "0.0")
 
   vdiffr::expect_doppelganger("groupedline_ro_gg_theme_0.0", groupedline_ro_gg_theme_0.0)
-
 })
 
 test_that("ro_gg_theme works for facetted graphs", {
-
   # version 1.0
   scatterplot_facets_ro_gg_theme <- mtcars |>
     ggplot(aes(x = wt, y = mpg)) +
@@ -98,7 +91,6 @@ test_that("ro_gg_theme works for facetted graphs", {
 })
 
 test_that("ro_gg_theme errors when user gives wrong input", {
-
   # only possible for version 1.0
   expect_error(
     ro_gg_theme(base_size = "12", version = "1.0"),
@@ -119,11 +111,9 @@ test_that("ro_gg_theme errors when user gives wrong input", {
     ro_gg_theme(base_family = "Not an installed font"),
     "Can't find the `base_family` ="
   )
-
 })
 
 test_that("ro_gg_theme uses the font given in ro_gg_theme", {
-
   p <- barplot_ro_gg_theme <- mtcars |>
     dplyr::mutate(gear = as.factor(gear)) |>
     dplyr::group_by(gear) |>

@@ -11,8 +11,7 @@ test_that("ro_gg_axis only accepts the right inputs", {
 })
 
 test_that("axis limits are plotted as expected", {
-  plot <- ggplot2::ggplot(data.frame(x = 1:11, y = c(11:17, 5:2)),
-                          aes(x, y)) +
+  plot <- ggplot2::ggplot(data.frame(x = 1:11, y = c(11:17, 5:2)), aes(x, y)) +
     ggplot2::geom_point() +
     scale_x_continuous(
       breaks = pretty,

@@ -1,10 +1,20 @@
-linters: linters_with_defaults(
+linters: linters_with_tags(tags = c("default", "common_mistakes", "executing", "package_development"),
   line_length_linter = line_length_linter(120),
   commented_code_linter = NULL,
   object_usage_linter = NULL,
-  cyclocomp_linter = NULL,
+  return_linter = NULL,
   object_name_linter = NULL,
   object_length_linter = object_length_linter(length = 32L),
-  trailing_whitespace_linter = NULL
+  trailing_whitespace_linter = NULL,
+  pipe_consistency_linter(pipe = c("|>")),
+  backport_linter(r_version = getRversion(), except = character()),
+  package_hooks_linter = NULL,
+  expect_s3_class_linter = NULL,
+  expect_s4_class_linter = NULL
   )
 encoding: "UTF-8"
+exclusions: list(
+  "R/import-standalone-obj-type.R",
+  "R/import-standalone-types-check.R",
+  "tests/testthat.R"
+  )

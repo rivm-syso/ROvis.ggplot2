@@ -34,7 +34,6 @@
 #' }
 
 ro_gg_axis <- function(x, start_at_zero = TRUE) {
-
   if (!is.numeric(x)) {
     stop("x can only contain numerical values.")
   }
@@ -51,7 +50,7 @@ ro_gg_axis <- function(x, start_at_zero = TRUE) {
 
   # If the number of breaks is even, extend the sequence by one interval
   if (length(breaks) %% 2 == 0) {
-    interval <- diff(breaks)[1]  # take the first difference; works even for irregular intervals
+    interval <- diff(breaks)[1] # take the first difference; works even for irregular intervals
     breaks <- c(breaks, max(breaks) + interval)
   }
 

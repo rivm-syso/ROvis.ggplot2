@@ -1,5 +1,4 @@
 test_that("ro_gg_save only accepts expected inputs", {
-
   not_a_plot <- mtcars |> gt::gt()
 
   my_working_plot <- ggplot2::ggplot(data = datasets::mtcars, mapping = ggplot2::aes(x = wt, y = mpg)) +
@@ -8,8 +7,7 @@ test_that("ro_gg_save only accepts expected inputs", {
     ro_gg_theme()
 
   expect_error(
-    ro_gg_save(plot = not_a_plot,
-               filename = "testplt.png"),
+    ro_gg_save(plot = not_a_plot, filename = "testplt.png"),
     "'object' must be a ggplot object."
   )
 
@@ -19,10 +17,7 @@ test_that("ro_gg_save only accepts expected inputs", {
   )
 
   expect_error(
-    ro_gg_save(plot = my_working_plot,
-               filename = "test.png",
-               fontsize = "fifteen"),
+    ro_gg_save(plot = my_working_plot, filename = "test.png", fontsize = "fifteen"),
     "@size must be <NULL>, <integer>, or <double>, not <character>"
   )
-
 })

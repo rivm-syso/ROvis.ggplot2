@@ -1,3 +1,10 @@
+<!-- badges: start -->
+[![CI](https://img.shields.io/endpoint?url=https://rivm-syso.github.io/RO.ggplot2/badges/ci.json)](https://github.com/rivm-syso/ROvis.ggplot2/actions/workflows/ci.yaml)
+[![Lint](https://img.shields.io/endpoint?url=https://rivm-syso.github.io/ROvis.ggplot2/badges/lint.json)](https://github.com/rivm-syso/ROvis.ggplot2/actions/workflows/ci.yaml)
+[![Coverage](https://img.shields.io/endpoint?url=https://rivm-syso.github.io/ROvis.ggplot2/badges/coverage.json)](https://github.com/rivm-syso/ROvis.ggplot2/actions/workflows/ci.yaml)
+<!-- badges: end -->
+
+
 # ROvis.ggplot2
 
 ## Rijksoverheid Visualisatie - ggplot2

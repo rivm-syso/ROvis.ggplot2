@@ -30,14 +30,14 @@
 #'
 
 ro_gg_save <- function(
-    filename,
-    plot,
-    fontsize = 10.75,
-    dpi = 600,
-    width = 12,
-    height = 8,
-    units = "cm",
-    ...
+  filename,
+  plot,
+  fontsize = 10.75,
+  dpi = 600,
+  width = 12,
+  height = 8,
+  units = "cm",
+  ...
 ) {
   if (!inherits(plot, "ggplot")) {
     rlang::abort("'object' must be a ggplot object.")

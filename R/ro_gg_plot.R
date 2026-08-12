@@ -76,12 +76,12 @@
 #' }
 #' @export
 ro_gg_plot <- function(
-    plot,
-    flip = FALSE,
-    base_size = 12,
-    base_family = "RijksoverheidSansWebText",
-    lang = c("nl", "en"),
-    auto_set_y_title = TRUE
+  plot,
+  flip = FALSE,
+  base_size = 12,
+  base_family = "RijksoverheidSansWebText",
+  lang = c("nl", "en"),
+  auto_set_y_title = TRUE
 ) {
   if (!is_ggplot(plot)) {
     cli_abort("{.arg plot} must be a ggplot object.")

@@ -1,0 +1,315 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+name: CI
+
+permissions: read-all
+
+jobs:
+  air-format:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: posit-dev/setup-air@v1
+
+      - name: Check formatting
+        run: |
+          air format . --check || {
+            echo "::error::Code is not formatted with air. Run 'air format .' locally and commit the result (install: curl -LsSf https://github.com/posit-dev/air/releases/latest/download/air-installer.sh | sh)."
+            exit 1
+          }
+
+  lintr:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    container:
+      image: daratools/robase:latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      # rocker-based images run as root; mark the workspace as safe for git,
+      # otherwise git operations fail with "dubious ownership"
+      - name: Fix git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # R is already baked into daratools/robase - no setup-r needed.
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::lintr
+          needs: lint
+
+      # Deliberately doesn't use LINTR_ERROR_ON_LINT here: we need the lint
+      # count available afterwards to write the badge, and to fail the job
+      # explicitly only once the badge has been pushed.
+      - name: Lint package
+        id: lint
+        run: |
+          lints <- lintr::lint_package()
+          n <- length(lints)
+          cat("Lint issues found:", n, "\n")
+          if (n > 0) print(lints)
+          writeLines(as.character(n), "lint_count.txt")
+        shell: Rscript {0}
+
+      - name: Push lint badge to gh-pages
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          N=$(cat lint_count.txt 2>/dev/null || echo "0")
+          if [ "$N" -eq 0 ]; then
+            COLOR="brightgreen"; MESSAGE="passing"
+          else
+            COLOR="red"; MESSAGE="${N} issue(s)"
+          fi
+
+          mkdir -p /tmp/badge-output
+          printf '{\n  "schemaVersion": 1,\n  "label": "lintr",\n  "message": "%s",\n  "color": "%s"\n}\n' \
+            "$MESSAGE" "$COLOR" > /tmp/badge-output/lint.json
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin gh-pages 2>/dev/null || true
+          if git show-ref --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . --quiet
+          fi
+
+          mkdir -p badges
+          cp /tmp/badge-output/lint.json badges/lint.json
+          git add badges/lint.json
+          git diff --cached --quiet || git commit -m "chore: update lint badge [skip ci]"
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+
+      - name: Fail if lint issues found
+        if: always()
+        run: |
+          N=$(cat lint_count.txt 2>/dev/null || echo "0")
+          if [ "$N" -ne 0 ]; then
+            echo "::error::$N lint issue(s) found above (file:line:column - message). Run 'lintr::lint_package()' locally to reproduce, fix the code, or adjust .lintr if a rule genuinely shouldn't apply here."
+            exit 1
+          fi
+
+  R-CMD-check:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    container:
+      image: daratools/robase:latest
+    env:
+      # AT_ROvis authenticates installs of private rivm-syso/ROvis.* dependencies
+      # (via the Remotes: field in DESCRIPTION). Falls back to the default
+      # GITHUB_TOKEN for packages with no private cross-repo dependencies.
+      GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+    steps:
+      - uses: actions/checkout@v5
+
+      # rocker-based images run as root; mark the workspace as safe for git,
+      # otherwise git operations fail with "dubious ownership"
+      - name: Fix git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # R and pandoc are already baked into daratools/robase - no setup-r/setup-pandoc needed.
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
+
+  ci-badge:
+    needs: [air-format, R-CMD-check]
+    # Runs even when air-format/R-CMD-check fail (needs.*.result may be
+    # 'failure') so the badge can turn red instead of just not updating.
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Push CI badge to gh-pages
+        run: |
+          if [ "${{ needs.air-format.result }}" = "success" ] && [ "${{ needs.R-CMD-check.result }}" = "success" ]; then
+            COLOR="brightgreen"; MESSAGE="passing"
+          else
+            COLOR="red"; MESSAGE="failing"
+          fi
+
+          mkdir -p /tmp/badge-output
+          printf '{\n  "schemaVersion": 1,\n  "label": "CI",\n  "message": "%s",\n  "color": "%s"\n}\n' \
+            "$MESSAGE" "$COLOR" > /tmp/badge-output/ci.json
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin gh-pages 2>/dev/null || true
+          if git show-ref --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . --quiet
+          fi
+
+          mkdir -p badges
+          cp /tmp/badge-output/ci.json badges/ci.json
+          git add badges/ci.json
+          git diff --cached --quiet || git commit -m "chore: update CI badge [skip ci]"
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+
+  test-coverage:
+    needs: R-CMD-check
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    container:
+      image: daratools/robase:latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      # rocker-based images run as root; mark the workspace as safe for git,
+      # otherwise git operations below fail with "dubious ownership"
+      - name: Fix git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # R is already baked into daratools/robase - no setup-r step needed.
+      - name: Setup R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::covr, any::jsonlite, any::dplyr
+          needs: coverage
+
+      - name: Run tests and compute coverage
+        run: |
+          cov <- covr::package_coverage(
+            quiet = FALSE,
+            clean = FALSE,
+            install_path = file.path(
+              normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"),
+              "package"
+            )
+          )
+          covr::to_cobertura(cov)
+          pct <- round(covr::percent_coverage(cov), 1)
+
+          color <- dplyr::case_when(
+            pct >= 90 ~ "brightgreen",
+            pct >= 75 ~ "green",
+            pct >= 60 ~ "yellowgreen",
+            pct >= 50 ~ "yellow",
+            pct >= 40 ~ "orange",
+            TRUE ~ "red"
+          )
+
+          badge <- jsonlite::toJSON(
+            list(
+              schemaVersion = 1,
+              label = "coverage",
+              message = paste0(pct, "%"),
+              color = color
+            ),
+            auto_unbox = TRUE,
+            pretty = TRUE
+          )
+          dir.create("/tmp/badge-output", showWarnings = FALSE, recursive = TRUE)
+          writeLines(badge, "/tmp/badge-output/coverage.json")
+          cat("Coverage:", pct, "%\n")
+        shell: Rscript {0}
+
+      - name: Upload coverage badge JSON to GitHub Pages branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Switch to (or create) the gh-pages branch
+          git fetch origin gh-pages 2>/dev/null || true
+          if git show-ref --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . --quiet
+          fi
+
+          # Place the badge file and commit
+          mkdir -p badges
+          cp /tmp/badge-output/coverage.json badges/coverage.json
+          git add badges/coverage.json
+          git diff --cached --quiet || git commit -m "chore: update coverage badge [skip ci]"
+          git push origin gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+
+  # pkgdown:
+  #   needs: test-coverage
+  #   # test-coverage only runs on push/pull_request (see its `if:`), so on a
+  #   # release/workflow_dispatch trigger it's skipped rather than successful -
+  #   # explicitly allow that here, otherwise the default needs-gating would
+  #   # skip this job too.
+  #   if: |
+  #     github.event_name != 'pull_request' &&
+  #     !cancelled() &&
+  #     (needs.test-coverage.result == 'success' || needs.test-coverage.result == 'skipped')
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: daratools/robase:latest
+  #   permissions:
+  #     contents: write
+  #     pages: write
+  #   env:
+  #     GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v5
+
+  #     # rocker-based images run as root; mark the workspace as safe for git
+  #     - name: Fix git safe directory
+  #       run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+  #     # No setup-r step needed — R is already installed in your Docker image
+  #     - name: Setup pandoc
+  #       uses: r-lib/actions/setup-pandoc@v2
+
+  #     - name: Setup R dependencies
+  #       uses: r-lib/actions/setup-r-dependencies@v2
+  #       with:
+  #         extra-packages: any::pkgdown, local::.
+  #         needs: website
+
+  #     - name: Build pkgdown site
+  #       run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+  #       shell: Rscript {0}
+
+  #     - name: Deploy to GitHub Pages
+  #       uses: JamesIves/github-pages-deploy-action@v4
+  #       with:
+  #         clean: false # keeps the badges/ folder written by the coverage job
+  #         branch: gh-pages
+  #         folder: docs

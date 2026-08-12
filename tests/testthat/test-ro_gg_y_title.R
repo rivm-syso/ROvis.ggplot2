@@ -1,5 +1,4 @@
 test_that("ro_gg_y_title errors when user gives wrong input", {
-
   my_plot <- ggplot2::ggplot(data = datasets::mtcars, mapping = ggplot2::aes(x = wt, y = mpg)) +
     ggplot2::geom_point() +
     ggplot2::labs(title = "mtcars plot") +
@@ -9,11 +8,9 @@ test_that("ro_gg_y_title errors when user gives wrong input", {
     ggplot2::coord_cartesian(clip = "off")
 
   vdiffr::expect_doppelganger("plot_with_y_axis_rivm", plot_with_y_axis_rivm)
-
 })
 
 test_that("ro_gg_y_title errors when user gives wrong input", {
-
   my_plot <- ggplot2::ggplot(data = datasets::mtcars, mapping = ggplot2::aes(x = wt, y = mpg)) +
     ggplot2::geom_point() +
     ggplot2::labs(title = "mtcars plot") +
