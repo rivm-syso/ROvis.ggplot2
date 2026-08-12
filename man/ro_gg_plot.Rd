@@ -36,8 +36,7 @@ A modified ggplot object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-\code{ro_gg_plot()} is a concept/draft function that explores doing for \code{ggplot2} what
-\code{\link[ROvis.echarts:ro_e_theme]{ROvis.echarts::ro_e_theme()}} does for \code{echarts4r}: applying the RO visual style in a single step, instead
+\code{ro_gg_plot()} is a concept/draft function that explores applying the RO visual style in a single step, instead
 of requiring the separate calls to \code{\link[=ro_gg_theme]{ro_gg_theme()}}, \code{\link[=ro_gg_remove_axis_gap]{ro_gg_remove_axis_gap()}}, \code{\link[=ro_gg_axis]{ro_gg_axis()}},
 a manual thousands-separator, \code{\link[=ro_gg_group_ticks]{ro_gg_group_ticks()}}, and \code{\link[=ro_gg_y_title]{ro_gg_y_title()}} described in
 the \code{vignette("ggplot2-in-ro-style")} vignette.
@@ -104,7 +103,6 @@ ro_gg_plot(p)
 \itemize{
 \item \code{\link[=ro_gg_theme]{ro_gg_theme()}}, \code{\link[=ro_gg_remove_axis_gap]{ro_gg_remove_axis_gap()}}, \code{\link[=ro_gg_axis]{ro_gg_axis()}}, \code{\link[=ro_gg_group_ticks]{ro_gg_group_ticks()}}, and
 \code{\link[=ro_gg_y_title]{ro_gg_y_title()}}, which \code{ro_gg_plot()} combines.
-\item \code{\link[ROvis.echarts:ro_e_theme]{ROvis.echarts::ro_e_theme()}} for the \code{echarts4r} equivalent this function is modeled after.
 }
 
 Other ggplot2:

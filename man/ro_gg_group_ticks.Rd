@@ -18,8 +18,7 @@ A ggplot object
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Replaces the default per-category axis ticks of a bar/column chart with tick marks placed
-\emph{between} each group of bars, following RIVM design guidelines (the same placement used by
-the \code{echarts4r} equivalent, \code{\link[ROvis.echarts:e_theme_ro]{ROvis.echarts::e_theme_ro()}}). ggplot2 centers axis ticks under/next to each
+\emph{between} each group of bars, following RIVM design guidelines. ggplot2 centers axis ticks under/next to each
 category by default; \code{ro_gg_group_ticks()} hides those and draws short line segments at the
 boundary between every pair of adjacent categories instead, plus the two outer edges.
 

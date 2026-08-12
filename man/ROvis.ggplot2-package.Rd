@@ -6,7 +6,7 @@
 \alias{ROvis.ggplot2-package}
 \title{ROvis.ggplot2: Rijksoverheid Visualisatie - ggplot2}
 \description{
-ROvis.ggplot2 isn R package that provides a comprehensive suite of fucntions to visualise graphs in ggplot2 in Rijksoverheid style.
+This package provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
 }
 \author{
 \strong{Maintainer}: ROvis team \email{spin@rivm.nl}

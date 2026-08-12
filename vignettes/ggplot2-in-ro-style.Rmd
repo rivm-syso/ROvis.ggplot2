@@ -22,7 +22,8 @@ This vignette walks you through the steps to create a static graph with `ggplot2
 ```{r packages, message=FALSE}
 library(ggplot2)
 library(dplyr)
-library(ROvis.ggplot2)
+library(ROvis.utils) # nolint: missing_package_linter.
+library(ROvis.ggplot2) # nolint: missing_package_linter.
 ```
 
 We use a small synthetic dataset for demonstration purposes:
@@ -117,7 +118,7 @@ Unlike `ro_gg_theme()`, which returns a `theme()` object you add with `+` anywhe
 p_basic <- dat_cases |>
   filter(sex == "Women") |>
   ggplot(aes(x = agegroup, y = n)) +
-  geom_col(fill = ROvis.utils::ro_color("hemelblauw")) +
+  geom_col(fill = ro_color("hemelblauw")) +
   labs(
     title = "Cases by age group",
     subtitle = "Women only",
@@ -151,7 +152,7 @@ p_grouped <- dat_cases |>
   ggplot(aes(x = agegroup, y = n, fill = sex)) +
   geom_col(position = "dodge") +
   scale_fill_manual(
-    values = c(Women = ROvis.utils::ro_color("robijnrood"), Men = ROvis.utils::ro_color("hemelblauw"))
+    values = c(Women = ro_color("robijnrood"), Men = ro_color("hemelblauw"))
   ) +
   labs(
     title = "Cases by age group and sex",
@@ -174,7 +175,7 @@ Any discrete x-axis works the same:
 ```{r weekday-bar}
 p_weekday <- dat_weekday |>
   ggplot(aes(x = day, y = n)) +
-  geom_col(fill = ROvis.utils::ro_color("hemelblauw")) +
+  geom_col(fill = ro_color("hemelblauw")) +
   labs(
     title = "Cases by day of the week",
     x = "Day",
@@ -194,7 +195,7 @@ For a horizontal bar chart, swap `x` and `y` in `aes()` and set `flip = TRUE`:
 p_horizontal <- dat_cases |>
   filter(sex == "Women") |>
   ggplot(aes(x = n, y = agegroup)) +
-  geom_col(fill = ROvis.utils::ro_color("hemelblauw")) +
+  geom_col(fill = ro_color("hemelblauw")) +
   labs(
     title = "Cases by age group",
     subtitle = "Women only",
@@ -213,7 +214,7 @@ p_line <- dat_weekly |>
   ggplot(aes(x = week, y = n, color = sex, group = sex)) +
   geom_line(linewidth = 1) +
   scale_color_manual(
-    values = c(Women = ROvis.utils::ro_color("robijnrood"), Men = ROvis.utils::ro_color("hemelblauw"))
+    values = c(Women = ro_color("robijnrood"), Men = ro_color("hemelblauw"))
   ) +
   labs(
     title = "Weekly cases by sex",
@@ -284,7 +285,7 @@ It is possible to use the lower-level `ro_gg_theme` as a standalone theme. This 
 p_basic <- dat_cases |>
   filter(sex == "Women") |>
   ggplot(aes(x = agegroup, y = n)) +
-  geom_col(fill = ROvis.utils::ro_color("hemelblauw")) +
+  geom_col(fill = ro_color("hemelblauw")) +
   labs(
     title = "Cases by age group",
     subtitle = "Women only",
