@@ -5,7 +5,7 @@
 <!-- badges: end -->
 
 
-# ROvis.ggplot2
+# ROvis.ggplot2 <a href="https://github.com/rivm-syso/ROvis.ggplot2"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 ## Rijksoverheid Visualisatie - ggplot2
 
