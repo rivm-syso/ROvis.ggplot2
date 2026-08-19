@@ -6,6 +6,8 @@
 \alias{ROvis.ggplot2-package}
 \title{ROvis.ggplot2: Rijksoverheid Visualisatie - ggplot2}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 This package provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
 }
 \author{
