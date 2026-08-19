@@ -26,7 +26,7 @@ Suggests:
 Depends:
     R (>= 4.3.0)
 Remotes:
-    rivm-syso/ROvis.utils
+    git@github.com:rivm-syso/ROvis.utils.git
 VignetteBuilder: knitr
 Config/Roxygen2/markdown: TRUE
 Config/Roxygen2/version: 8.0.0
