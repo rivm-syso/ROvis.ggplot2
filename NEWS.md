@@ -2,6 +2,8 @@
 
 ### :sparkles: Added
 
+- Minimum R dependency is nog 4.5.0 (was 4.3.0).
+
 - Added installation instructions specifically for a private GitHub repo for this package.
 
 - Added the functions `ro_gg_axis`, `ro_gg_group_ticks`, `ro_gg_plot`, `ro_gg_remove_axis_gaps`, `ro_gg_save`, `ro_gg_theme`,`ro_gg_y_title`.
