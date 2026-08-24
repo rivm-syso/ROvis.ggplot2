@@ -1,12 +1,12 @@
 ---
 title: "ggplot2 in RO style"
-output:
-  rmarkdown::html_vignette:
+format:
+  html:
     dpi: 72
-  tabset: TRUE
+    tabset: TRUE
 vignette: >
   %\VignetteIndexEntry{ggplot2 in RO style}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 
 ---

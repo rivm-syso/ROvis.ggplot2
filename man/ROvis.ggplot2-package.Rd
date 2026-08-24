@@ -4,9 +4,11 @@
 \name{ROvis.ggplot2-package}
 \alias{ROvis.ggplot2}
 \alias{ROvis.ggplot2-package}
-\title{ROvis.ggplot2: Rijksoverheid Visualisatie - ggplot2}
+\title{ROvis.ggplot2: Create data visualisations in Rijksoverheid style using ggplot2}
 \description{
-This package provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+A tool to uniformly visualise graphs in ggplot2 using standardized Rijksoverheid (Dutch National Government) styling. Part of the ROvis umbrella package.
 }
 \author{
 \strong{Maintainer}: ROvis team \email{spin@rivm.nl}

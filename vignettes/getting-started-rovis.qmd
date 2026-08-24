@@ -1,11 +1,11 @@
 ---
 title: "Getting Started with ROvis"
-output:
-  rmarkdown::html_vignette:
-  tabset: TRUE
+format:
+  html:
+    tabset: TRUE
 vignette: >
   %\VignetteIndexEntry{Getting Started with ROvis}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
