@@ -2,7 +2,7 @@
 
 ### :sparkles: Added
 
-- Minimum R dependency is nog 4.5.0 (was 4.3.0).
+- Minimum R dependency is 4.5.0 (was 4.3.0).
 
 - Added installation instructions specifically for a private GitHub repo for this package.
 
