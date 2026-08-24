@@ -10,7 +10,7 @@
 ## Rijksoverheid Visualisatie - ggplot2
 
 ## Description
-ROvis.ggplot2 isn R package that provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
+ROvis.ggplot2 is an R package that provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
 
 ## Installation
 
