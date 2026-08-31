@@ -142,7 +142,7 @@ fig_brab +
   scale_color_manual(values = c(ROvis.utils::ro_color_categorical()))
 ```
 
-If you want to learn more about using color palettes for ordinal and continuous data, go to the [Working with color palettes vignette](color-palettes.html).
+If you want to learn more about using color palettes for ordinal and continuous data, go to the [Working with color palettes vignette](https://rivm-syso.github.io/ROvis.utils/articles/color-palettes.html).
 
 ## Themes and style
 
