@@ -6,7 +6,7 @@ Description: A tool to uniformly visualise graphs in 'ggplot2' using standardize
 License: Apache License (>= 2)
 Imports: 
     systemfonts (>= 1.3.2),
-    ggplot2,
+    ggplot2 (>= 4.0.3),
     grid (>= 4.5.1),
     scales (>= 1.4.0),
     ROvis.utils,
@@ -18,7 +18,7 @@ Suggests:
     knitr (>= 1.51),
     pkgdown (>= 2.0.9),
     quarto (>= 1.4),
-    dplyr,
+    dplyr (>= 1.2.1),
     testthat (>= 3.0.0),
     tidyverse (>= 2.0.0),
     vdiffr (>= 1.0.9)
