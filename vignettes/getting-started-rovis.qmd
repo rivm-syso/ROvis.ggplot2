@@ -15,8 +15,13 @@ knitr::opts_chunk$set(collapse = TRUE, echo = TRUE)
 
 The visualization functions in ROvis make it easy to apply RIVM colors when creating plots R. In addition, ROvis provides standardized RIVM themes for graphs (`ggplot2`), tables (`gt`) and HTML reports created with `rmarkdown`. These color palettes and themes were designed to make reporting more consistent, readable, and aligned with the RIVM visual identity.
 
-In our package, we follow the [rijkshuisstijl](https://www.rijkshuisstijl.nl/modules/folder/brandguide/default/grouplist.aspx?ItemId=6739) wherever possible. We also use the RIVM data visualization style guidelines.
+In our package, we follow the [rijkshuisstijl](https://www.rijkshuisstijl.nl/modules/folder/brandguide/default/grouplist.aspx?ItemId=6739) wherever possible.
 
+::: {.callout-note}
+## Important
+
+In this vignette, the examples specifically follow the style guidelines of the National Institue for Public Health and the Envrionment (RIVM).
+:::
 
 ## Loading data
 

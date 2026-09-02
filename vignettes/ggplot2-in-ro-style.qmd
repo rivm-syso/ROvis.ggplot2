@@ -17,6 +17,12 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 8, fig.height = 5)
 
 This vignette walks you through the steps to create a static graph with `ggplot2` according to a fixed set of rules/guidelines. This vignette uses the RIVM guidelines as a basis. In future releases of `ROvis`, we aim to allow adding other guidelines from other Rijksoverheid organisations as well.
 
+::: {.callout-note}
+## Important
+
+In this vignette, the examples specifically follow the style guidelines of the National Institue for Public Health and the Envrionment (RIVM).
+:::
+
 ## Setup
 
 ```{r packages, message=FALSE}

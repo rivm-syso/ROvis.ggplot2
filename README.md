@@ -10,7 +10,7 @@
 ## Rijksoverheid Visualisatie - ggplot2
 
 ## Description
-ROvis.ggplot2 is an R package that provides a comprehensive suite of functions to visualise graphs in ggplot2 in Rijksoverheid style.
+A tool to uniformly visualise graphs in 'ggplot2' using standardized Rijksoverheid (Dutch National Government) styling. This package is part of the [ROvis umbrella package] (https://github.com/rivm-syso/ROvis).
 
 ## Installation
 
@@ -23,16 +23,24 @@ remotes::install_github("rivm-syso/ROvis.ggplot2")
 
 
 ## Usage
-*Use examples liberally, and show the expected output if you can. It's helpful to have the smallest example of usage that you can demonstrate inline, while providing links to more sophisticated examples if they are too long to reasonably include in the README.*
+A short example of on how to use the ro_gg_theme() function in combination with your ggplot-object.
+
+```r
+library(ggplot2)
+library(ROvis.ggplot2)
+data |>
+  filter(sex == "Women") |>
+  ggplot(aes(x = agegroup, y = n)) +
+  ro_gg_theme()
+```
 
 ## Support
 First point of contact for questions: ROvis team (spin@rivm.nl)
 
-## Roadmap
-*If you have ideas for releases in the future, it is a good idea to list them in the README.*
-
 ## Contributing
-*State if you are open to contributions and what your requirements are for accepting them.*
+We welcome contributions and are always happy to see people help improve this package.
+If you would like to contribute, please first open an issue to describe the bug, feature, or proposed change. Once you are ready, submit a pull request linked to that issue.
+All contributions will be reviewed by the SPIN team before they are merged.
 
 ## Instructions for developers 
 
@@ -72,4 +80,4 @@ create automatic documentation in the `man` folder
 This R packages was created by ROvis team (spin@rivm.nl).
 
 ## License
-*For open source projects, indicate how it is licensed.*
+This package uses an Apache license.
