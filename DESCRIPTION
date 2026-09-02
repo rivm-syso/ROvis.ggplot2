@@ -21,8 +21,7 @@ Suggests:
     dplyr,
     testthat (>= 3.0.0),
     tidyverse (>= 2.0.0),
-    vdiffr (>= 1.0.9),
-    webshot (>= 0.5.5)
+    vdiffr (>= 1.0.9)
 Depends:
     R (>= 4.5.0)
 Remotes:
