@@ -10,7 +10,7 @@
 ## Rijksoverheid Visualisatie - ggplot2
 
 ## Description
-A tool to uniformly visualise graphs in 'ggplot2' using standardized Rijksoverheid (Dutch National Government) styling. This package is part of the ROvis umbrella package.
+A tool to uniformly visualise graphs in 'ggplot2' using standardized Rijksoverheid (Dutch National Government) styling. This package is part of the [ROvis umbrella package] (https://github.com/rivm-syso/ROvis).
 
 ## Installation
 
@@ -38,7 +38,9 @@ data |>
 First point of contact for questions: ROvis team (spin@rivm.nl)
 
 ## Contributing
-*State if you are open to contributions and what your requirements are for accepting them.*
+We welcome contributions and are always happy to see people help improve this package.
+If you would like to contribute, please first open an issue to describe the bug, feature, or proposed change. Once you are ready, submit a pull request linked to that issue.
+All contributions will be reviewed by the SPIN team before they are merged.
 
 ## Instructions for developers 
 
