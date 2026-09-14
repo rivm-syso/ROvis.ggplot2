@@ -124,3 +124,14 @@ test_that("ro_gg_theme uses the font given in ro_gg_theme", {
     ro_gg_theme(version = "1.0", base_family = "Verdana")
   expect_identical(p@theme$text@family, "Verdana")
 })
+
+test_that("ro_gg_theme applies the font resolved by ro_check_if_font_available, not the requested one", {
+  local_mocked_bindings(
+    ro_check_if_font_available = function(base_family) "Verdana"
+  )
+  p <- mtcars |>
+    ggplot(aes(x = wt, y = mpg)) +
+    ggplot2::geom_point() +
+    ro_gg_theme(version = "1.0", base_family = "RijksoverheidSansWebText")
+  expect_identical(p@theme$text@family, "Verdana")
+})

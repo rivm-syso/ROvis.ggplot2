@@ -36,6 +36,5 @@
 #' @importFrom ROvis.utils ro_check_if_font_available
 #' @importFrom ROvis.utils ro_color
 #' @importFrom scales label_comma
-#' @importFrom systemfonts system_fonts
 ## usethis namespace: end
 NULL

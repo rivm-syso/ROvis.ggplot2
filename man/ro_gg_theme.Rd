@@ -15,9 +15,10 @@ ro_gg_theme(
 \item{base_size}{Integer. Default = 13. If you select version 1.0, base_size is transformed to
 base_size / 13 * 12 (default = 12).}
 
-\item{base_family}{Character. Default = "Verdana". If version = 1.0, default is "RijksoverheidSansWebText".
-Accepts system fonts. If RijksoverheidSansWebText is not available as a systemfont, Verdana is used as a backup font.
-Tip: you can check your available systemfonts with \code{systemfonts::system_fonts()$family}.}
+\item{base_family}{Character. Default = "RijksoverheidSansWebText". Accepts system fonts. If
+RijksoverheidSansWebText is not installed, Verdana is used, then Arial, then the first font found on your
+system, whichever is installed first. Tip: you can check your available systemfonts with
+\code{systemfonts::system_fonts()$family}.}
 
 \item{flip}{Logical. When set to FALSE (default), graphs have a thick x-axis and horizontal grid lines. For certain
 types of graphs, such as those with horizontal bars, it may be necessary to 'flip' these elements. Setting \code{flip}
@@ -93,7 +94,9 @@ The following design elements from the RIVM style guide are incorporated into \c
 \itemize{
 \item Font family: The official RIVM style uses the Rijksoverheid Sans font. This theme
 does not add the RO fonts to your device, but will use them if available.
-If the ROfonts are not available, the Verdana font is used.
+If the RO font is not available, Verdana is used, then Arial, then the first font
+found on your system, whichever is installed first (see
+\link[ROvis.utils]{ro_check_if_font_available}).
 \item Y-axis title alignment: The official RIVM style rotates the y-axis title horizontally and aligns it to the top
 of the plot area, which ggplot2 currently doesn't support. As a result, y-axis alignment is left to the user.
 \item X-axis ticks: The official RIVM style positions x-axis ticks between the bars of a barplot. Achieving this in

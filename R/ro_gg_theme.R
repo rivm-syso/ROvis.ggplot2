@@ -46,7 +46,9 @@
 #' **What are the differences between `ro_gg_theme` and the official RIVM style?**
 #' * Font family: The official RIVM style uses the Rijksoverheid Sans font. This theme
 #' does not add the RO fonts to your device, but will use them if available.
-#' If the ROfonts are not available, the Verdana font is used.
+#' If the RO font is not available, Verdana is used, then Arial, then the first font
+#' found on your system, whichever is installed first (see
+#' \link[ROvis.utils]{ro_check_if_font_available}).
 #' * Y-axis title alignment: The official RIVM style rotates the y-axis title horizontally and aligns it to the top
 #' of the plot area, which ggplot2 currently doesn't support. As a result, y-axis alignment is left to the user.
 #' * X-axis ticks: The official RIVM style positions x-axis ticks between the bars of a barplot. Achieving this in
@@ -70,9 +72,10 @@
 #'
 #' @param base_size Integer. Default = 13. If you select version 1.0, base_size is transformed to
 #' base_size / 13 * 12 (default = 12).
-#' @param base_family Character. Default = "Verdana". If version = 1.0, default is "RijksoverheidSansWebText".
-#' Accepts system fonts. If RijksoverheidSansWebText is not available as a systemfont, Verdana is used as a backup font.
-#' Tip: you can check your available systemfonts with `systemfonts::system_fonts()$family`.
+#' @param base_family Character. Default = "RijksoverheidSansWebText". Accepts system fonts. If
+#' RijksoverheidSansWebText is not installed, Verdana is used, then Arial, then the first font found on your
+#' system, whichever is installed first. Tip: you can check your available systemfonts with
+#' `systemfonts::system_fonts()$family`.
 #' @param flip Logical. When set to FALSE (default), graphs have a thick x-axis and horizontal grid lines. For certain
 #' types of graphs, such as those with horizontal bars, it may be necessary to 'flip' these elements. Setting `flip`
 #' to TRUE changes the style to include a thick y-axis and vertical grid lines. Note: `flip` is only available from
@@ -118,7 +121,7 @@ ro_gg_theme <- function(
 ) {
   check_string(version, allow_empty = FALSE)
   check_string(base_family)
-  ro_check_if_font_available(base_family = base_family)
+  base_family <- ro_check_if_font_available(base_family = base_family)
 
   if (version == "0.0") {
     ro_gg_theme_0.0(base_size = base_size, base_family = base_family)
@@ -250,13 +253,6 @@ ro_gg_theme_1.0 <- function(base_size, base_family, flip) {
   check_number_decimal(base_size)
   check_string(base_family, allow_empty = FALSE)
   check_bool(flip)
-
-  if (
-    base_family == "RijksoverheidSansWebText" &&
-      !"RijksoverheidSansWebText" %in% system_fonts()$family
-  ) {
-    base_family <- "Verdana"
-  }
 
   # show info alert once per session
   inform(
