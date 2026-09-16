@@ -127,7 +127,7 @@ test_that("ro_gg_theme uses the font given in ro_gg_theme", {
 
 test_that("ro_gg_theme applies the font resolved by ro_check_if_font_available, not the requested one", {
   local_mocked_bindings(
-    ro_check_if_font_available = function(base_family) "Verdana"
+    ro_check_if_font_available = function(target_font_family) "Verdana"
   )
   p <- mtcars |>
     ggplot(aes(x = wt, y = mpg)) +

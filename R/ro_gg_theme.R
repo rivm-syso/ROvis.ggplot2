@@ -121,7 +121,7 @@ ro_gg_theme <- function(
 ) {
   check_string(version, allow_empty = FALSE)
   check_string(base_family)
-  base_family <- ro_check_if_font_available(base_family = base_family)
+  base_family <- ro_check_if_font_available(target_font_family = base_family)
 
   if (version == "0.0") {
     ro_gg_theme_0.0(base_size = base_size, base_family = base_family)
