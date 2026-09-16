@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A tool to uniformly visualise graphs in ggplot2 using standardized Rijksoverheid (Dutch National Government) styling. Part of the ROvis umbrella package.
+A tool to uniformly visualise graphs in 'ggplot2' using standardized Rijksoverheid (Dutch National Government) styling. Part of the ROvis umbrella package.
 }
 \author{
 \strong{Maintainer}: ROvis team \email{spin@rivm.nl}
