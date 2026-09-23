@@ -3,7 +3,7 @@ Title: Create data visualisations in Rijksoverheid style using ggplot2
 Version: 0.1.0
 Authors@R: person("ROvis team", email = "spin@rivm.nl", role = c("cre", "aut"))
 Description: A tool to uniformly visualise graphs in 'ggplot2' using standardized Rijksoverheid (Dutch National Government) styling. Part of the ROvis umbrella package.
-License: Apache License (>= 2)
+License: EUPL (>= 1.2)
 Imports:
     ggplot2 (>= 4.0.3),
     grid (>= 4.5.1),

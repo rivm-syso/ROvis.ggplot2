@@ -80,4 +80,4 @@ create automatic documentation in the `man` folder
 This R packages was created by ROvis team (spin@rivm.nl).
 
 ## License
-This package uses an Apache license.
+The code can be re-used under license [EUPL v.1.2](https://eupl.eu/1.2/en/). See [LICENCE](LICENCE) for details.
