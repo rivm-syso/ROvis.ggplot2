@@ -16,7 +16,7 @@ While the package was originally developed for RIVM (and was previously called D
 
 ### 1. Open an issue
 
-**Before submitting any code changes**, please open an issue on the [GitHub issue board](TODO) to:
+**Before submitting any code changes**, please open an issue on the [GitHub issue board](https://github.com/rivm-syso/ROvis.ggplot2/issues) to:
 
 - Describe the bug you want to fix or the feature you want to add
 - Explain why the change is needed
@@ -39,13 +39,13 @@ Give maintainers and other contributors time to respond to your issue. This disc
 - There are no conflicts with planned changes
 - The change adheres to Rijksoverheid design guidelines
 
-### 3. Fork and create a branch
+### 3. Create a branch
 
 Once your issue has been discussed and approved:
 
-1. Fork the repository
-2. Create a feature branch from `main`
-3. Name your branch descriptively (e.g., `fix-color-palette`, `add-new-theme`)
+1. If you have write access to the repository, work in the repository itself. Otherwise, fork the repository
+2. Create a branch from the default branch
+3. Name your branch after the issue (see [Git etiquette](#git-etiquette))
 
 ### 4. Make your changes
 
@@ -71,11 +71,42 @@ When coding:
 
 ### 6. Submit a pull request
 
-- Push your branch to your fork
-- Create a pull request targeting the `main` branch
+- Push your branch (to the repository, or to your fork if you don't have write access)
+- Create a pull request targeting the default branch
 - Reference the issue number in your pull request
 - Provide a clear description of what your changes do
 - Include examples or screenshots if applicable
+
+## Git etiquette
+
+### Branches
+
+- One branch per issue. If you have write access, create the branch from the issue page ("Create a branch") so it's named `<issue-number>-<short-description>` and linked to the issue automatically. In a fork, use the same naming.
+- Branch off the latest version of the default branch: pull before you start.
+- Keep branches short-lived and delete them after they're merged.
+
+### Commits
+
+- Keep commits small and focused: one logical change per commit.
+- Write a descriptive commit message in the imperative mood that says *what* changed and *why*: `Fix fallback font when Rijksoverheid Sans is missing`, not `fix` or `lint`.
+- Don't mix formatting or linting changes with functional changes; commit them separately.
+- Run `air format .`, `lintr::lint_package()` and `devtools::check()` before pushing.
+- Never commit secrets, credentials or local files (such as `.Rhistory`, `.Rproj.user/` or `docs/`).
+
+### Pull requests
+
+- Every pull request is linked to an issue (e.g. `Closes #12`) and fills in the pull request template.
+- Keep pull requests small and about one thing. Large changes are easier to review in steps.
+- Open a draft pull request early if you'd like feedback before it's finished.
+- Make sure CI passes before requesting a review.
+- Don't push directly to the default branch; all changes go through a pull request.
+
+### Reviews
+
+- Every pull request needs at least one approving review before it's merged.
+- As a reviewer: be kind and specific, and explain *why*. Make clear which comments must be fixed and which are optional suggestions (for example by starting the comment with "Optional:").
+- As an author: respond to every comment, and only resolve a thread once it's addressed.
+- The author merges the pull request after approval, unless agreed otherwise.
 
 ## Code standards
 
@@ -127,7 +158,7 @@ Please avoid contributions that:
 
 If you have questions about contributing:
 
-- Open a discussion issue on [GitHub](TODO)
+- Open a discussion issue on [GitHub](https://github.com/rivm-syso/ROvis.ggplot2/issues)
 - Email the SPIN team: [spin@rivm.nl](mailto:spin@rivm.nl)
 - Review existing code and documentation in the repository to understand patterns and conventions
 
