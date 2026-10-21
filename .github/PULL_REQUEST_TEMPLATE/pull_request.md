@@ -14,7 +14,7 @@ about: "Use this template to make your PR easy to review"
 
 - [ ] I have read contributing guidelines at `CONTRIBUTING.md`
 - [ ] My code follows the style guidelines of this project
-= [ ] I have tested these changes and added tests (if applicable)
+- [ ] I have tested these changes and added tests (if applicable)
 - [ ] I have added necessary documentation / comments
 - [ ] I have linked relevant issues
 

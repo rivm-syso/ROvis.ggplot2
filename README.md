@@ -37,9 +37,9 @@ data |>
 First point of contact for questions: ROvis team (spin@rivm.nl)
 
 ## Contributing
-We welcome contributions and are always happy to see people help improve this package.
-If you would like to contribute, please first open an issue to describe the bug, feature, or proposed change. Once you are ready, submit a pull request linked to that issue.
-All contributions will be reviewed by the SPIN team before they are merged.
+We welcome contributions! Before you start, **please read [CONTRIBUTING.md](.github/CONTRIBUTING.md)**.
+It explains how to open an issue, our git etiquette (branches, commits, pull requests and reviews)
+and our code standards. See [CONTRIBUTORS.md](CONTRIBUTORS.md) for the list of contributors.
 
 ## Instructions for developers 
 
