@@ -267,49 +267,49 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
 
-  # pkgdown:
-  #   needs: test-coverage
-  #   # test-coverage only runs on push/pull_request (see its `if:`), so on a
-  #   # release/workflow_dispatch trigger it's skipped rather than successful -
-  #   # explicitly allow that here, otherwise the default needs-gating would
-  #   # skip this job too.
-  #   if: |
-  #     github.event_name != 'pull_request' &&
-  #     !cancelled() &&
-  #     (needs.test-coverage.result == 'success' || needs.test-coverage.result == 'skipped')
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: daratools/robase:latest
-  #   permissions:
-  #     contents: write
-  #     pages: write
-  #   env:
-  #     GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v5
+  pkgdown:
+    needs: test-coverage
+    # test-coverage only runs on push/pull_request (see its `if:`), so on a
+    # release/workflow_dispatch trigger it's skipped rather than successful -
+    # explicitly allow that here, otherwise the default needs-gating would
+    # skip this job too.
+    if: |
+      github.event_name != 'pull_request' &&
+      !cancelled() &&
+      (needs.test-coverage.result == 'success' || needs.test-coverage.result == 'skipped')
+    runs-on: ubuntu-latest
+    container:
+      image: daratools/robase:latest
+    permissions:
+      contents: write
+      pages: write
+    env:
+      GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-  #     # rocker-based images run as root; mark the workspace as safe for git
-  #     - name: Fix git safe directory
-  #       run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      # rocker-based images run as root; mark the workspace as safe for git
+      - name: Fix git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-  #     # No setup-r step needed — R is already installed in your Docker image
-  #     - name: Setup pandoc
-  #       uses: r-lib/actions/setup-pandoc@v2
+      # No setup-r step needed — R is already installed in your Docker image
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
 
-  #     - name: Setup R dependencies
-  #       uses: r-lib/actions/setup-r-dependencies@v2
-  #       with:
-  #         extra-packages: any::pkgdown, local::.
-  #         needs: website
+      - name: Setup R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          needs: website
 
-  #     - name: Build pkgdown site
-  #       run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
-  #       shell: Rscript {0}
+      - name: Build pkgdown site
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        shell: Rscript {0}
 
-  #     - name: Deploy to GitHub Pages
-  #       uses: JamesIves/github-pages-deploy-action@v4
-  #       with:
-  #         clean: false # keeps the badges/ folder written by the coverage job
-  #         branch: gh-pages
-  #         folder: docs
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          clean: false # keeps the badges/ folder written by the coverage job
+          branch: gh-pages
+          folder: docs

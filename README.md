@@ -14,12 +14,23 @@ A tool to uniformly visualise graphs in 'ggplot2' using standardized Rijksoverhe
 
 ## Installation
 
+Install the latest release from [R-universe](https://rivm-syso.r-universe.dev):
+
 ```r
-# Install from GitHub
+install.packages(
+  "ROvis.ggplot2",
+  repos = c("https://rivm-syso.r-universe.dev", "https://cloud.r-project.org")
+)
+```
+
+Install the development version from GitHub:
+
+```r
 # install.packages("pak")
 pak::pak("rivm-syso/ROvis.ggplot2")
 ```
 
+A version number ending in `.9000` is a development version.
 
 ## Usage
 A short example of on how to use the ro_gg_theme() function in combination with your ggplot-object.

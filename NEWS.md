@@ -1,4 +1,4 @@
-# ROvis.ggplot2 v0.1.0
+# ROvis.ggplot2 0.1.0
 
 ### :sparkles: Added
 

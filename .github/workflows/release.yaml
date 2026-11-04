@@ -1,0 +1,124 @@
+# Publishes a release when main has a release version (no .9000) that has no tag yet:
+# creates the tag and GitHub release, then opens the dev version PR.
+# See "Releases" in .github/CONTRIBUTING.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+name: Release
+
+permissions: read-all
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      # A release or PR created with the default GITHUB_TOKEN does not trigger other
+      # workflows, so ci.yaml would not deploy pkgdown on the release and would not run
+      # on the dev version PR. AT_ROvis does trigger them.
+      GH_TOKEN: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
+
+      # Decides whether this push is a release. The result is passed to the next steps
+      # as steps.version.outputs.release ("true" or "false"); they only run on "true".
+      - name: Check version
+        id: version
+        run: |
+          # Read the "Package:" and "Version:" fields from DESCRIPTION,
+          # e.g. PKG=ROvis.utils and VERSION=0.2.0
+          PKG=$(grep '^Package:' DESCRIPTION | cut -d ' ' -f 2)
+          VERSION=$(grep '^Version:' DESCRIPTION | cut -d ' ' -f 2)
+
+          # Make both values available to the next steps
+          echo "package=$PKG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+          # A release version has exactly three numbers (0.2.0).
+          # A development version has four (0.2.0.9000): no release.
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Version $VERSION is a development version, nothing to release."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+
+          # Already released: the tag v0.2.0 exists on GitHub. This happens on every
+          # push between merging the release PR and merging the dev version PR.
+          elif git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" > /dev/null; then
+            echo "Tag v$VERSION already exists, nothing to release."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+
+          # Release version without a tag: the release PR was just merged
+          else
+            echo "Version $VERSION has no tag yet, releasing."
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create tag and GitHub release
+        if: steps.version.outputs.release == 'true'
+        env:
+          PKG: ${{ steps.version.outputs.package }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Copy the release notes from NEWS.md: every line below the heading
+          # "# ROvis.utils 0.2.0", up to the next "# " heading (the previous release).
+          # awk reads NEWS.md line by line:
+          #   - strip trailing spaces, so "# ROvis.utils 0.2.0 " still matches
+          #   - at the heading: start copying, skip the heading itself
+          #   - at the next "# " heading while copying: stop
+          #   - while copying: print the line
+          awk -v heading="# $PKG $VERSION" '
+            { sub(/[[:space:]]+$/, "") }
+            $0 == heading { copying = 1; next }
+            copying && /^# / { exit }
+            copying { print }
+          ' NEWS.md > "$RUNNER_TEMP/release-notes.md"
+
+          # Stop if nothing was copied: the heading is missing or misspelled
+          if [ ! -s "$RUNNER_TEMP/release-notes.md" ]; then
+            echo "::error::NEWS.md has no '# $PKG $VERSION' section. Run usethis::use_version() in the release PR."
+            exit 1
+          fi
+
+          # Create tag v0.2.0 on the merged commit and a GitHub release with those notes
+          gh release create "v$VERSION" \
+            --target "$GITHUB_SHA" \
+            --title "$PKG $VERSION" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
+
+      - name: Open dev version PR
+        if: steps.version.outputs.release == 'true'
+        env:
+          PKG: ${{ steps.version.outputs.package }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Same result as usethis::use_dev_version(): 0.2.0 becomes 0.2.0.9000
+          DEV_VERSION="$VERSION.9000"
+          BRANCH="dev-version-$DEV_VERSION"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+
+          # Replace the "Version:" line in DESCRIPTION
+          sed -i "s/^Version: .*/Version: $DEV_VERSION/" DESCRIPTION
+
+          # Add "# ROvis.utils (development version)" at the top of NEWS.md,
+          # where the bullets for the next release go
+          { printf '# %s (development version)\n\n' "$PKG"; cat NEWS.md; } > "$RUNNER_TEMP/NEWS.md"
+          mv "$RUNNER_TEMP/NEWS.md" NEWS.md
+
+          # Commit on the new branch, push it and open the PR into main
+          git add DESCRIPTION NEWS.md
+          git commit -m "Increment version number to $DEV_VERSION"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "Increment version number to $DEV_VERSION" \
+            --body "Opened by \`release.yaml\` after the v$VERSION release. Sets the development version and adds a new \`NEWS.md\` heading. Merge this PR to continue development."

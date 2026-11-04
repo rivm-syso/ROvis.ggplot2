@@ -108,6 +108,26 @@ When coding:
 - As an author: respond to every comment, and only resolve a thread once it's addressed.
 - The author merges the pull request after approval, unless agreed otherwise.
 
+## Releases
+
+`main` is the only long-lived branch. Between releases it has a development version ending in `.9000`. A release is a tag `vX.Y.Z` on `main` with a GitHub release. [R-universe](https://rivm-syso.r-universe.dev) builds the latest release.
+
+### In every pull request
+
+- Add a bullet to `NEWS.md` under the `(development version)` heading for every user-facing change. These bullets become the release notes.
+- Don't change `Version` in `DESCRIPTION`. It only changes in a release pull request.
+- Every `Remotes:` entry for an ROvis package ends in `@*release`, for example `rivm-syso/ROvis.utils@*release`. If you need an unreleased change from another ROvis package, remove `@*release` from that entry and raise the minimum version in `Imports:` to its development version. That package is then released first.
+
+### Making a release (maintainers)
+
+1. Open a release pull request. Run `usethis::use_version()` with `"patch"` (bug fixes only), `"minor"` (new features) or `"major"` (breaking changes). It sets `Version` and renames the `(development version)` heading in `NEWS.md`. Check that every `Remotes:` entry ends in `@*release`.
+2. Merge it after review. `release.yaml` creates the tag and the GitHub release, with the `NEWS.md` section as release notes, and opens a pull request that sets the next development version.
+3. Merge that pull request.
+
+R-universe builds the release within about an hour. If `release.yaml` fails, run `usethis::use_github_release()` on `main` and `usethis::use_dev_version()` in a new pull request.
+
+When several ROvis packages are released together, release them in dependency order: `ROvis.utils`, then `ROvis.table`, `ROvis.ggplot2`, `ROvis.plotly` and `ROvis.echarts`, then `ROvis.shiny`, then `ROvis`.
+
 ## Code standards
 
 - **Single source of truth**: all color definitions live in `color()`. Build on existing functions rather than duplicating logic.
