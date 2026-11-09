@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: posit-dev/setup-air@v1
+      - uses: posit-dev/setup-air@fd20dd239848b9d807848a7ab92265cf197de694 # v1.0.2
 
       - name: Check formatting
         run: |
@@ -47,7 +47,7 @@ jobs:
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       # R is already baked into daratools/robase - no setup-r needed.
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
           extra-packages: any::lintr
           needs: lint
@@ -127,12 +127,12 @@ jobs:
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       # R and pandoc are already baked into daratools/robase - no setup-r/setup-pandoc needed.
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/check-r-package@v2
+      - uses: r-lib/actions/check-r-package@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual", "--compact-vignettes=gs+qpdf")'
@@ -201,7 +201,7 @@ jobs:
 
       # R is already baked into daratools/robase - no setup-r step needed.
       - name: Setup R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+        uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
           extra-packages: any::covr, any::jsonlite, any::dplyr
           needs: coverage
@@ -295,10 +295,10 @@ jobs:
 
       # No setup-r step needed — R is already installed in your Docker image
       - name: Setup pandoc
-        uses: r-lib/actions/setup-pandoc@v2
+        uses: r-lib/actions/setup-pandoc@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
 
       - name: Setup R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
+        uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
@@ -308,7 +308,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
         with:
           clean: false # keeps the badges/ folder written by the coverage job
           branch: gh-pages

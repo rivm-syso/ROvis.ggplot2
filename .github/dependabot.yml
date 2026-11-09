@@ -1,0 +1,12 @@
+# Keeps the GitHub Actions in .github/workflows up to date, including the commit SHA
+# pins in ci.yaml. One grouped PR per month at most.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns:
+          - "*"
