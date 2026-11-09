@@ -22,7 +22,7 @@ jobs:
       # on the dev version PR. AT_ROvis does trigger them.
       GH_TOKEN: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           token: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
 
