@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/rivm-syso/ROvis.ggplot2/blob/v0.1.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/rivm-syso/ROvis.ggplot2/blob/main/DESCRIPTION)
 
 ROvis team (2026). *ROvis.ggplot2: Create data visualisations in
 Rijksoverheid style using ggplot2*. R package version 0.1.0,
