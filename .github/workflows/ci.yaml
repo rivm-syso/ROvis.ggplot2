@@ -18,9 +18,9 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: posit-dev/setup-air@fd20dd239848b9d807848a7ab92265cf197de694 # v1.0.2
+      - uses: posit-dev/setup-air@482cb5912394878ab5a63b75db0f9d19cc6df5ba # v1.0.3
 
       - name: Check formatting
         run: |
@@ -39,7 +39,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # rocker-based images run as root; mark the workspace as safe for git,
       # otherwise git operations fail with "dubious ownership"
@@ -119,7 +119,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # rocker-based images run as root; mark the workspace as safe for git,
       # otherwise git operations fail with "dubious ownership"
@@ -147,7 +147,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Push CI badge to gh-pages
         run: |
@@ -192,7 +192,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       # rocker-based images run as root; mark the workspace as safe for git,
       # otherwise git operations below fail with "dubious ownership"
@@ -287,7 +287,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.AT_ROvis || secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       # rocker-based images run as root; mark the workspace as safe for git
       - name: Fix git safe directory
